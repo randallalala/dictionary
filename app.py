@@ -39,13 +39,21 @@ def success():
         # file=request.files["file"]
         # file.save(secure_filename("uploaded"+file.filename))
         # with open("uploaded"+file.filename,"a") as f:
-            # f.write("This was added later!")
-        print(chi,eng,pinyin)
-        print(request.form)
-        db.session.add(chi,eng,pinyin)
-        db.commit()
+        # f.write("This was added later!")
         # print(type(file))
-        return render_template("success.html")
+        
+        # --- TEST WRITING CONDITIONAL , step by step
+        # print(chi,eng,pinyin)
+        # print(request.form)
+        # print(db.session.query(Data).filter(Data.chi_==chi))
+        # print(db.session.query(Data).filter(Data.chi_==chi).count())
+        
+        if db.session.query(Data).filter(Data.chi_==chi).count() == 0:
+            data=Data(chi,eng,pinyin)
+            db.session.add(data)
+            db.session.commit()
+            return render_template("success.html")
+    return render_template("index.html", text="word already exists")
 
 
 if __name__ == '__main__':

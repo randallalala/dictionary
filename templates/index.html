@@ -11,6 +11,9 @@
     <div class="container">
       <h1>Dictionary</h1>
       <!-- <form action="success.html" method="POST"> -->
+        <div class="message">
+          {{text | safe}}
+        </div>
       <form action="{{url_for('success')}}" method="POST">
         <input title="chi" placeholder="chi" type="text" name="chi" /> <br>
         <input title="eng" placeholder="eng" type="text" name="eng" /> <br>
