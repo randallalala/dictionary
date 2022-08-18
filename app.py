@@ -3,28 +3,28 @@
 # from enum import unique
 # import pywebio
 from flask import Flask, render_template, request
-# from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 # from pywebio.input import input, TEXT
 # from pywebio.output import put_text, put_html, put_markdown, put_table
 
 app=Flask(__name__)
-# app=Flask(__name__, template_folder='templates', static_folder='../static')
-# app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:postgres@localhost/dict'
-# db=SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:postgres@localhost/dict'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db=SQLAlchemy(app)
 
-# class Data(db.Model):
-#     __tablename__="data"
-#     id=db.Column(db.Integer, primary_key=True)
-#     # underscore to discriminate
-#     chi_=db.Column(db.String, unique=True)
-#     eng_=db.Column(db.String, unique=True)
-#     pinyin_=db.Column(db.String, unique=True)
+class Data(db.Model):
+    __tablename__="data"
+    id=db.Column(db.Integer, primary_key=True)
+    # underscore to discriminate
+    chi_=db.Column(db.String, unique=True)
+    eng_=db.Column(db.String, unique=True)
+    pinyin_=db.Column(db.String, unique=True)
     
-#     def __init__(self, chi_, eng_, pinyin_):
-#         self.chi_=chi_
-#         self.eng_=eng_
-#         self.pinyin_=pinyin_
+    def __init__(self, chi_, eng_, pinyin_):
+        self.chi_=chi_
+        self.eng_=eng_
+        self.pinyin_=pinyin_
     
 @app.route("/")
 def index():
@@ -42,6 +42,8 @@ def success():
             # f.write("This was added later!")
         print(chi,eng,pinyin)
         print(request.form)
+        db.session.add(chi,eng,pinyin)
+        db.commit()
         # print(type(file))
         return render_template("success.html")
 
