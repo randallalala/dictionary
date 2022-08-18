@@ -1,12 +1,12 @@
 
 from crypt import methods
 from enum import unique
-import pywebio
+# import pywebio
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
-from pywebio.input import input, TEXT
-from pywebio.output import put_text, put_html, put_markdown, put_table
+# from pywebio.input import input, TEXT
+# from pywebio.output import put_text, put_html, put_markdown, put_table
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:postgres@localhost/dict'
@@ -40,8 +40,10 @@ def sucess():
         print(type(file))
         return render_template("index.html", btn="download.html")
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    debug=True
+    app.run()
 
 # ----------------------------------------------------------------------------- 
 
