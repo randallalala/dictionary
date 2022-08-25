@@ -1,17 +1,30 @@
 
 # from crypt import methods
 # from enum import unique
-# import pywebio
-from flask import Flask, render_template, request
+import os
+from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Table, Column, Integer, String
 
-# from pywebio.input import input, TEXT
-# from pywebio.output import put_text, put_html, put_markdown, put_table
 
+# basedir = os.path.abspath(os.path.dirname(__file__))
 app=Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:postgres@localhost/dict'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db=SQLAlchemy(app)
+
+
+# metadata_obj = MetaData()
+
+# user = Table(
+#     'user',
+#     metadata_obj,
+#     Column('user_id', Integer, primary_key=True),
+#     Column('user_name', String(16), nullable=False),
+#     Column('email_address', String(60)),
+#     Column('nickname', String(50), nullable=False)
+# )
+
 
 class Data(db.Model):
     __tablename__="data"
@@ -30,7 +43,7 @@ class Data(db.Model):
 def index():
     return render_template("index.html")
 
-@app.route("/success.html", methods=['POST'])
+@app.route("/success", methods=['POST'])
 def success():
     if request.method=='POST':
         chi=request.form["chi"]
@@ -48,6 +61,11 @@ def success():
         # print(db.session.query(Data).filter(Data.chi_==chi))
         # print(db.session.query(Data).filter(Data.chi_==chi).count())
         
+        # for item in range:
+        #     range = db.session.query(Data).filter(Data.chi_==chi)
+        #     print(item)
+            
+        # check if unique,
         if db.session.query(Data).filter(Data.chi_==chi).count() == 0:
             data=Data(chi,eng,pinyin)
             db.session.add(data)
@@ -56,24 +74,26 @@ def success():
     return render_template("index.html", text="word already exists")
 
 
+result_set = db.session.query("SELECT * FROM data")  
+for r in result_set:  
+    print(r)
+
+
+# @app.route("/pinyin")
+# , methods=['GET']
+# def pinyin():
+#     # data=Data(pinyin)
+#     data = Data.query.filter_by(Data.pinyin_==pinyin).all()
+#     return f'{data.pinyin_}'
+    
+# @app.route("/english.html", methods=['GET'])
+    # def english():
+
+
+# print(db.session.query(Data).filter(Data.chi_==chi))
+
+
 if __name__ == '__main__':
     app.debug=True
     app.run()
 
-# ----------------------------------------------------------------------------- 
-
-#     eng = input("eng:", type=TEXT) 
-#     chi = input("chi:", type=TEXT)
-
-#             # put_markdown('# **Results**')
-#             # put_text('eng: %.1f' % ( status))
-#             # put_html('<br><br>')
-#             # # put_markdown('Your BMI: `%.1f` ' % ( status))
-#             # put_html('<hr>')
-#     put_table([
-#         ['ENG', 'CHI'],
-#         [eng , chi],
-#     ])
-
-# if __name__ == '__main__':
-#     pywebio.start_server(bmi, port=55)
