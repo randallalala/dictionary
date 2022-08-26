@@ -4,7 +4,7 @@
 import os
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Table, Column, Integer, String, text
+from sqlalchemy import Table, Column, Integer, String, text, desc
 
 app=Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:postgres@localhost/dict'
@@ -29,14 +29,9 @@ from app import db, Data
 
 @app.route("/")
 def index():
-    words = Data.query.all()
+    words = Data.query.order_by("name desc").all()
     return render_template("index.html", content=words)
 
-# words = Data.query.all()
-# for word in words:
-    # print(word.pinyin_)
-    # print(word.chi_)
-    # print(word.eng_)
 
 # sorted = Data.query.order_by().all()
 # words = Data.query.all()
@@ -72,3 +67,8 @@ if __name__ == '__main__':
     app.debug=True
     app.run()
 
+# TO ADD
+# - edit delete
+# - upload file
+# - password for delete
+# - sort pinyin / english - sort button
