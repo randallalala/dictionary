@@ -11,15 +11,35 @@
     <div class="container">
       <h1>Dictionary</h1>
       <!-- <form action="success.html" method="POST"> -->
-        <div class="message">
-          {{text | safe}}
-        </div>
+      <div class="message">{{text | safe}}</div>
+
       <form action="{{url_for('success')}}" method="POST">
-        <input title="chi" placeholder="chi" type="text" name="chi" /> <br>
-        <input title="eng" placeholder="eng" type="text" name="eng" /> <br>
-        <input title="pinyin" placeholder="pinyin" type="text" name="pinyin" /> <br>
-        <button type="submit">Save</button> 
+        <input title="chi" placeholder="chi" type="text" name="chi" /> <br />
+        <input title="eng" placeholder="eng" type="text" name="eng" /> <br />
+        <input title="pinyin" placeholder="pinyin" type="text" name="pinyin" />
+        <br />
+        <button type="submit">Save</button>
       </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Chinese</th>
+            <th>English</th>
+            <th>Pinyin</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for c in content %}
+          <tr>
+            <td>{{c.chi_}}</td>
+            <td>{{c.eng_}}</td>
+            <td>{{c.pinyin_}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </body>
 </html>
