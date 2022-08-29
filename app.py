@@ -87,5 +87,3 @@ if __name__ == '__main__':
 # SELECT * 
 # FROM data
 # ORDER BY chi_ DESC 
-
-# test
