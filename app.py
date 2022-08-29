@@ -16,9 +16,9 @@ class Data(db.Model):
     __tablename__="data"
     id=db.Column(db.Integer, primary_key=True)
     # underscore to discriminate
-    chi_=db.Column(db.String, unique=True)
-    eng_=db.Column(db.String, unique=True)
     pinyin_=db.Column(db.String, unique=True)
+    eng_=db.Column(db.String, unique=True)
+    chi_=db.Column(db.String, unique=True)
     
     def __init__(self, chi_, eng_, pinyin_):
         self.chi_=chi_
@@ -28,19 +28,19 @@ class Data(db.Model):
 from app import db, Data
 
 @app.route("/")
-def index():
-    # content = Data.query.order_by(Data.pinyin_.asc()).all()
-    # chi = Data.query.order_by(Data.chi_.asc()).all()
+def home():
+    # pinyin = Data.query.order_by(Data.pinyin_.asc()).all()
     # eng = Data.query.order_by(Data.eng_.asc()).all()
+    # chi = Data.query.order_by(Data.chi_.asc()).all()
     content = Data.query.all()
-    return render_template("index.html", content=content)
+    return render_template("home.html", content=content)
 
 @app.route("/success", methods=['POST'])
 def success():
     if request.method=='POST':
-        chi=request.form["chi"]
-        eng=request.form["eng"]
         pinyin=request.form["pinyin"]
+        eng=request.form["eng"]
+        chi=request.form["chi"]
         
         # --- TEST WRITING CONDITIONAL , step by step
         # print(chi,eng,pinyin)
@@ -54,7 +54,7 @@ def success():
             db.session.add(data)
             db.session.commit()
             return render_template("success.html")
-    return render_template("index.html", text="word already exists")
+    return render_template("home.html", text="word already exists")
 
 
 @app.route("/content/<int:content_id>/update", methods=['POST'])
@@ -74,9 +74,11 @@ if __name__ == '__main__':
 
 # TO ADD
 # - edit delete
-# - upload file
+# - upload data from file
+# - download backup file
 # - password for delete
 # - sort pinyin / english - sort button
+# - other languages
 
 # SQL QUERY
 # UPDATE  data
