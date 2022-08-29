@@ -60,7 +60,8 @@ def success():
 @app.route("/content/<int:content_id>/update", methods=['POST'])
 def update_content(content_id):
     content = content.query.get_or_404(content_id)
-    form = return render_template("success.html")
+    # form = 
+    return render_template("success.html")
 
         
         # --- TEST WRITING CONDITIONAL , step by step
@@ -86,3 +87,5 @@ if __name__ == '__main__':
 # SELECT * 
 # FROM data
 # ORDER BY chi_ DESC 
+
+# test
