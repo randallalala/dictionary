@@ -29,16 +29,11 @@ from app import db, Data
 
 @app.route("/")
 def index():
-    words = Data.query.order_by("name desc").all()
-    return render_template("index.html", content=words)
-
-
-# sorted = Data.query.order_by().all()
-# words = Data.query.all()
-# for word in words:
-#     print(Data.query(pinyin_).order_by().all())
-    # print(word.chi_)
-    # print(word.eng_)
+    # content = Data.query.order_by(Data.pinyin_.asc()).all()
+    # chi = Data.query.order_by(Data.chi_.asc()).all()
+    # eng = Data.query.order_by(Data.eng_.asc()).all()
+    content = Data.query.all()
+    return render_template("index.html", content=content)
 
 @app.route("/success", methods=['POST'])
 def success():
@@ -62,6 +57,15 @@ def success():
     return render_template("index.html", text="word already exists")
 
 
+@app.route("/content/<int:content_id>/update", methods=['POST'])
+def update_content(content_id):
+    content = content.query.get_or_404(content_id)
+    form = return render_template("success.html")
+
+        
+        # --- TEST WRITING CONDITIONAL , step by step
+        # print(chi,eng,pinyin)
+
 
 if __name__ == '__main__':
     app.debug=True
@@ -72,3 +76,13 @@ if __name__ == '__main__':
 # - upload file
 # - password for delete
 # - sort pinyin / english - sort button
+
+# SQL QUERY
+# UPDATE  data
+# SET pinyin_ = 'bianliang'
+# WHERE id ='8'
+# RETURNING *
+# ---
+# SELECT * 
+# FROM data
+# ORDER BY chi_ DESC 

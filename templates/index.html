@@ -22,20 +22,20 @@
       </form>
 
       <table class="">
-        <thead>
+        <thead class="header">
           <tr>
-            <th>Chinese</th>
-            <th>English</th>
-            <th>Pinyin</th>
+            <th>CHINESE</th>
+            <th>ENGLISH</th>
+            <th>PINYIN</th>
           </tr>
         </thead>
 
         <tbody>
-          {% for c in content %}
+          {% for x in content %}
           <tr>
-            <!-- <td>{{c.chi_}}</td> -->
-            <!-- <td>{{c.eng_}}</td> -->
-            <td>{{c.pinyin_}}</td>
+            <td>{{x.chi_}}</td>
+            <td>{{x.eng_}}</td>
+            <td>{{x.pinyin_}}</td>
           </tr>
           {% endfor %}
         </tbody>

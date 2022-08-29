@@ -57,3 +57,11 @@ html, body {
     color: #ff9999
   }
   
+  .header {
+    text-decoration: underline;
+}
+
+table, th, td {
+  border: 1px solid;
+  border-collapse: collapse
+}
